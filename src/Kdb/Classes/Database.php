@@ -1,6 +1,8 @@
 <?php
 
-namespace Lazer\Classes;
+
+
+namespace Kdb\Classes;
 
 class Database extends Core_Database {
     

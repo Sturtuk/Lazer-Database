@@ -1,6 +1,6 @@
 <?php
 
-namespace Lazer\Classes\Helpers;
+namespace Kdb\Classes\Helpers;
 
 /**
  * Data managing class
@@ -9,7 +9,7 @@ namespace Lazer\Classes\Helpers;
  * @author Grzegorz Kuźnik
  * @copyright (c) 2013, Grzegorz Kuźnik
  * @license http://opensource.org/licenses/MIT The MIT License
- * @link https://github.com/Greg0/Lazer-Database GitHub Repository
+ * @link https://github.com/Greg0/Kdb-Database GitHub Repository
  */
 class Data extends File {
 

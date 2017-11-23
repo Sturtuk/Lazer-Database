@@ -127,7 +127,7 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Lazer\Classes\Database::asArray
+     * Kdb\Classes\Database::asArray
      * @depends testTableExists
      */
     public function testAsArray($table)
@@ -157,7 +157,7 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Lazer\Classes\Database::count
+     * Kdb\Classes\Database::count
      * @depends testTableExists
      */
     public function testIsCountable($table)

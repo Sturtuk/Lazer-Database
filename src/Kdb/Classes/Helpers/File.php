@@ -1,8 +1,8 @@
 <?php
 
-namespace Lazer\Classes\Helpers;
+namespace Kdb\Classes\Helpers;
 
-use Lazer\Classes\LazerException;
+use Kdb\Classes\KdbException;
 
 /**
  * File managing class
@@ -11,7 +11,7 @@ use Lazer\Classes\LazerException;
  * @author Grzegorz Kuźnik
  * @copyright (c) 2013, Grzegorz Kuźnik
  * @license http://opensource.org/licenses/MIT The MIT License
- * @link https://github.com/Greg0/Lazer-Database GitHub Repository
+ * @link https://github.com/Greg0/Kdb-Database GitHub Repository
  */
 class File implements FileInterface {
 
@@ -42,17 +42,17 @@ class File implements FileInterface {
 
     public final function getPath()
     {
-        if (!defined('LAZER_DATA_PATH'))
+        if (!defined('Kdb_DATA_PATH'))
         {
-            throw new LazerException('Please define constant LAZER_DATA_PATH (check README.md)');
+            throw new KdbException('Please define constant Kdb_DATA_PATH (check README.md)');
         }
         else if (!empty($this->type))
         {
-            return LAZER_DATA_PATH . $this->name . '.' . $this->type . '.json';
+            return Kdb_DATA_PATH . $this->name . '.' . $this->type . '.json';
         }
         else
         {
-            throw new LazerException('Please specify the type of file in class: ' . __CLASS__);
+            throw new KdbException('Please specify the type of file in class: ' . __CLASS__);
         }
     }
 
@@ -79,10 +79,10 @@ class File implements FileInterface {
             if (unlink($this->getPath()))
                 return TRUE;
 
-            throw new LazerException($type . ': Deleting failed');
+            throw new KdbException($type . ': Deleting failed');
         }
 
-        throw new LazerException($type . ': File does not exists');
+        throw new KdbException($type . ': File does not exists');
     }
 
 }

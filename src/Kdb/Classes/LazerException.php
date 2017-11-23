@@ -1,6 +1,6 @@
 <?php
 
-namespace Lazer\Classes;
+namespace Kdb\Classes;
 
 /**
  * Exception extend
@@ -9,6 +9,6 @@ namespace Lazer\Classes;
  * @author Grzegorz Kuźnik
  * @copyright (c) 2013, Grzegorz Kuźnik
  */
-class LazerException extends \Exception {
+class KdbException extends \Exception {
     
 }

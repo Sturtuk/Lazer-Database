@@ -1,14 +1,14 @@
 <?php
 
-namespace Lazer\Classes;
+namespace Kdb\Classes;
 
-use Lazer\Classes\LazerException;
-use Lazer\Classes\Database;
-use Lazer\Classes\Relation;
-use Lazer\Classes\Helpers;
+use Kdb\Classes\KdbException;
+use Kdb\Classes\Database;
+use Kdb\Classes\Relation;
+use Kdb\Classes\Helpers;
 
 /**
- * Core class of Lazer.
+ * Core class of Kdb.
  *
  * There are classes to use JSON files like file database.
  *
@@ -18,7 +18,7 @@ use Lazer\Classes\Helpers;
  * @author Grzegorz Kuźnik
  * @copyright (c) 2013, Grzegorz Kuźnik
  * @license http://opensource.org/licenses/MIT The MIT License
- * @link https://github.com/Greg0/Lazer-Database GitHub Repository
+ * @link https://github.com/Greg0/Kdb-Database GitHub Repository
  */
 abstract class Core_Database implements \IteratorAggregate, \Countable {
 
@@ -54,7 +54,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
 
     /**
      * Pending functions with values
-     * @see \Lazer\Classes\Core_Database::setPending()
+     * @see \Kdb\Classes\Core_Database::setPending()
      * @var array
      */
     protected $pending;
@@ -68,8 +68,8 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
     /**
      * Factory pattern
      * @param string $name Name of table
-     * @return \Lazer\Classes\Database
-     * @throws LazerException If there's problems with load file
+     * @return \Kdb\Classes\Database
+     * @throws KdbException If there's problems with load file
      */
     public static function table($name)
     {
@@ -86,7 +86,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
 
     /**
      * Get rows from table
-     * @uses Lazer\Classes\Helpers\Data::get() to get data from file
+     * @uses Kdb\Classes\Helpers\Data::get() to get data from file
      * @return array
      */
     protected function getData()
@@ -106,7 +106,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
      * Returns array key of row with specified ID
      * @param integer $id Row ID
      * @return integer Row key
-     * @throws LazerException If there's no data with that ID
+     * @throws KdbException If there's no data with that ID
      */
     protected function getRowKey($id)
     {
@@ -118,7 +118,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
                 break;
             }
         }
-        throw new LazerException('No data found with ID: ' . $id);
+        throw new KdbException('No data found with ID: ' . $id);
     }
 
     /**
@@ -131,7 +131,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
 
     /**
      * Setting fields with default values
-     * @uses Lazer\Classes\Helpers\Validate::isNumeric() to check if type of field is numeric
+     * @uses Kdb\Classes\Helpers\Validate::isNumeric() to check if type of field is numeric
      */
     protected function setFields()
     {
@@ -176,8 +176,8 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
 
     /**
      * Validating fields and setting variables to current operations
-     * @uses Lazer\Classes\Helpers\Validate::field() to check that field exist
-     * @uses Lazer\Classes\Helpers\Validate::type() to check that field type is correct
+     * @uses Kdb\Classes\Helpers\Validate::field() to check that field exist
+     * @uses Kdb\Classes\Helpers\Validate::type() to check that field type is correct
      * @param string $name Field name
      * @param mixed $value Field value
      */
@@ -193,14 +193,14 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
      * Returning variable from Object
      * @param string $name Field name
      * @return mixed Field value
-     * @throws LazerException
+     * @throws KdbException
      */
     public function __get($name)
     {
         if (isset($this->set->{$name}))
             return $this->set->{$name};
 
-        throw new LazerException('There is no data');
+        throw new KdbException('There is no data');
     }
 
     /**
@@ -251,15 +251,15 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
      *
      * ID field isn't required (it will be created automatically) but you can specify it at first place.
      *
-     * @uses Lazer\Classes\Helpers\Data::arrToLower() to lower case keys and values of array
-     * @uses Lazer\Classes\Helpers\Data::exists() to check if data file exists
-     * @uses Lazer\Classes\Helpers\Config::exists() to check if config file exists
-     * @uses Lazer\Classes\Helpers\Validate::types() to check if type of fields are correct
-     * @uses Lazer\Classes\Helpers\Data::put() to save data file
-     * @uses Lazer\Classes\Helpers\Config::put() to save config file
+     * @uses Kdb\Classes\Helpers\Data::arrToLower() to lower case keys and values of array
+     * @uses Kdb\Classes\Helpers\Data::exists() to check if data file exists
+     * @uses Kdb\Classes\Helpers\Config::exists() to check if config file exists
+     * @uses Kdb\Classes\Helpers\Validate::types() to check if type of fields are correct
+     * @uses Kdb\Classes\Helpers\Data::put() to save data file
+     * @uses Kdb\Classes\Helpers\Config::put() to save config file
      * @param string $name Table name
      * @param array $fields Field configuration
-     * @throws LazerException If table exist
+     * @throws KdbException If table exist
      */
     public static function create($name, array $fields)
     {
@@ -267,7 +267,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
 
         if (Helpers\Data::table($name)->exists() && Helpers\Config::table($name)->exists())
         {
-            throw new LazerException('helper\Table "' . $name . '" already exists');
+            throw new KdbException('helper\Table "' . $name . '" already exists');
         }
 
         $types = array_values($fields);
@@ -290,10 +290,10 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
 
     /**
      * Removing table with config
-     * @uses Lazer\Classes\Helpers\Data::remove() to remove data file
-     * @uses Lazer\Classes\Helpers\Config::remove() to remove config file
+     * @uses Kdb\Classes\Helpers\Data::remove() to remove data file
+     * @uses Kdb\Classes\Helpers\Config::remove() to remove config file
      * @param string $name Table name
-     * @return boolean|LazerException
+     * @return boolean|KdbException
      */
     public static function remove($name)
     {
@@ -308,7 +308,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
     /**
      * Grouping results by one field
      * @param string $column
-     * @return \Lazer\Classes\Core_Database
+     * @return \Kdb\Classes\Core_Database
      */
     public function groupBy($column)
     {
@@ -340,7 +340,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
     /**
      * JOIN other tables
      * @param string $table relations separated by :
-     * @return \Lazer\Classes\Core_Database
+     * @return \Kdb\Classes\Core_Database
      */
     public function with($table)
     {
@@ -374,7 +374,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
      * Sorting data by field
      * @param string $key Field name
      * @param string $direction ASC|DESC
-     * @return \Lazer\Classes\Core_Database
+     * @return \Kdb\Classes\Core_Database
      */
     public function orderBy($key, $direction = 'ASC')
     {
@@ -445,7 +445,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
      * @param string $field Field name
      * @param string $op Operator
      * @param mixed $value Field value
-     * @return \Lazer\Classes\Core_Database
+     * @return \Kdb\Classes\Core_Database
      */
     public function where($field, $op, $value)
     {
@@ -464,7 +464,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
      * @param string $field Field name
      * @param string $op Operator
      * @param mixed $value Field value
-     * @return \Lazer\Classes\Core_Database
+     * @return \Kdb\Classes\Core_Database
      */
     public function andWhere($field, $op, $value)
     {
@@ -478,7 +478,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
      * @param string $field Field name
      * @param string $op Operator
      * @param mixed $value Field value
-     * @return \Lazer\Classes\Core_Database
+     * @return \Kdb\Classes\Core_Database
      */
     public function orWhere($field, $op, $value)
     {
@@ -642,7 +642,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
      * Should be used at the end of chain, before end method
      * @param integer $number Limit number
      * @param integer $offset Offset number
-     * @return \Lazer\Classes\Core_Database
+     * @return \Kdb\Classes\Core_Database
      */
     public function limit($number, $offset = 0)
     {
@@ -854,7 +854,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
     /**
      * Returns one row with specified ID
      * @param integer $id Row ID
-     * @return \Lazer\Classes\Core_Database
+     * @return \Kdb\Classes\Core_Database
      */
     public function find($id = NULL)
     {
@@ -911,7 +911,7 @@ abstract class Core_Database implements \IteratorAggregate, \Countable {
      */
     public function debug()
     {
-        $print = "Lazer::table(" . $this->name . ")\n";
+        $print = "Kdb::table(" . $this->name . ")\n";
         foreach ($this->pending as $function => $values)
         {
             if (!empty($values))

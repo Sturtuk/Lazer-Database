@@ -1,9 +1,9 @@
 <?php
 
-namespace Lazer\Classes\Helpers;
+namespace Kdb\Classes\Helpers;
 
-use Lazer\Classes\LazerException;
-use Lazer\Classes\Relation;
+use Kdb\Classes\KdbException;
+use Kdb\Classes\Relation;
 
 /**
  * Validation for tables
@@ -12,7 +12,7 @@ use Lazer\Classes\Relation;
  * @author Grzegorz Kuźnik
  * @copyright (c) 2013, Grzegorz Kuźnik
  * @license http://opensource.org/licenses/MIT The MIT License
- * @link https://github.com/Greg0/Lazer-Database GitHub Repository
+ * @link https://github.com/Greg0/Kdb-Database GitHub Repository
  */
 class Validate {
 
@@ -55,7 +55,7 @@ class Validate {
      * Checking that types from array matching with [boolean, integer, string, double]
      * @param array $types Indexed array
      * @return bool
-     * @throws LazerException
+     * @throws KdbException
      */
     public static function types(array $types)
     {
@@ -66,7 +66,7 @@ class Validate {
         {
             return TRUE;
         }
-        throw new LazerException('Wrong types: "' . implode(', ', $diff) . '". Available "boolean, integer, string, double"');
+        throw new KdbException('Wrong types: "' . implode(', ', $diff) . '". Available "boolean, integer, string, double"');
     }
 
     /**
@@ -107,7 +107,7 @@ class Validate {
      * Checking that typed fields really exist in table
      * @param array $fields Indexed array
      * @return boolean
-     * @throws LazerException If field(s) does not exist
+     * @throws KdbException If field(s) does not exist
      */
     public function fields(array $fields)
     {
@@ -118,14 +118,14 @@ class Validate {
         {
             return TRUE;
         }
-        throw new LazerException('Field(s) "' . implode(', ', $diff) . '" does not exists in table "' . $this->name . '"');
+        throw new KdbException('Field(s) "' . implode(', ', $diff) . '" does not exists in table "' . $this->name . '"');
     }
 
     /**
      * Checking that typed field really exist in table
      * @param string $name
      * @return boolean
-     * @throws LazerException If field does not exist
+     * @throws KdbException If field does not exist
      */
     public function field($name)
     {
@@ -133,21 +133,21 @@ class Validate {
         {
             return TRUE;
         }
-        throw new LazerException('Field ' . $name . ' does not exists in table "' . $this->name . '"');
+        throw new KdbException('Field ' . $name . ' does not exists in table "' . $this->name . '"');
     }
 
     /**
      * Checking that Table and Config exists and throw exceptions if not
      * @return boolean
-     * @throws LazerException
+     * @throws KdbException
      */
     public function exists()
     {
         if (!Data::table($this->name)->exists())
-            throw new LazerException('Table "' . $this->name . '" does not exists');
+            throw new KdbException('Table "' . $this->name . '" does not exists');
 
         if (!Config::table($this->name)->exists())
-            throw new LazerException('Config "' . $this->name . '" does not exists');
+            throw new KdbException('Config "' . $this->name . '" does not exists');
 
         return TRUE;
     }
@@ -157,7 +157,7 @@ class Validate {
      * @param string $name
      * @param mixed $value
      * @return boolean
-     * @throws LazerException If type is wrong
+     * @throws KdbException If type is wrong
      */
     public function type($name, $value)
     {
@@ -167,7 +167,7 @@ class Validate {
             return TRUE;
         }
 
-        throw new LazerException('Wrong data type');
+        throw new KdbException('Wrong data type');
     }
 
     /**
@@ -175,7 +175,7 @@ class Validate {
      * @param string $local local table
      * @param string $foreign related table
      * @return bool relation exists
-     * @throws LazerException
+     * @throws KdbException
      */
     public static function relation($local, $foreign)
     {
@@ -185,14 +185,14 @@ class Validate {
             return TRUE;
         }
 
-        throw new LazerException('Relation "' . $local . '" to "' . $foreign . '" doesn\'t exist');
+        throw new KdbException('Relation "' . $local . '" to "' . $foreign . '" doesn\'t exist');
     }
 
     /**
      * Checking that relation type is correct
      * @param string $type 
      * @return bool relation type
-     * @throws LazerException Wrong relation type
+     * @throws KdbException Wrong relation type
      */
     public static function relationType($type)
     {
@@ -201,7 +201,7 @@ class Validate {
             return true;
         }
 
-        throw new LazerException('Wrong relation type');
+        throw new KdbException('Wrong relation type');
     }
 
 }

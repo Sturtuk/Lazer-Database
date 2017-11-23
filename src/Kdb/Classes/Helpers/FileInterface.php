@@ -1,8 +1,8 @@
 <?php
 
-namespace Lazer\Classes\Helpers;
+namespace Kdb\Classes\Helpers;
 
-use Lazer\Classes\LazerException;
+use Kdb\Classes\KdbException;
 
 interface FileInterface {
 
@@ -22,7 +22,7 @@ interface FileInterface {
     /**
      * Returning path to file
      * @return string Path to file
-     * @throws LazerException You must specify the type of file
+     * @throws KdbException You must specify the type of file
      */
     public function getPath();
 
@@ -49,7 +49,7 @@ interface FileInterface {
     /**
      * Removing file
      * @return boolean
-     * @throws LazerException If file doesn't exists or there's problems with deleting files
+     * @throws KdbException If file doesn't exists or there's problems with deleting files
      */
     public function remove();
 }

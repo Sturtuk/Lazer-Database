@@ -1,20 +1,20 @@
 <?php
 
-namespace Lazer\Classes;
+namespace Kdb\Classes;
 
-use Lazer\Classes\Helpers\Validate;
-use Lazer\Classes\Helpers\Config;
-use Lazer\Classes\Database;
-use Lazer\Classes\LazerException;
+use Kdb\Classes\Helpers\Validate;
+use Kdb\Classes\Helpers\Config;
+use Kdb\Classes\Database;
+use Kdb\Classes\KdbException;
 
 /**
- * Relation class of LAZER project.
+ * Relation class of Kdb project.
  * 
  * @category Core
  * @author Grzegorz Kuźnik
  * @copyright (c) 2013, Grzegorz Kuźnik
  * @license http://opensource.org/licenses/MIT The MIT License
- * @link https://github.com/Greg0/Lazer-Database GitHub Repository
+ * @link https://github.com/Greg0/Kdb-Database GitHub Repository
  */
 abstract class Core_Relation {
 
@@ -51,7 +51,7 @@ abstract class Core_Relation {
     /**
      * Factory method
      * @param string $name Name of table
-     * @return \Lazer\Classes\Relation
+     * @return \Kdb\Classes\Relation
      */
     public static function table($name)
     {
@@ -103,8 +103,8 @@ abstract class Core_Relation {
      * Set key name
      * @param string $type local or foreign
      * @param string $key key name
-     * @return \Lazer\Classes\Core_Relation
-     * @throws LazerException First you must define tables name
+     * @return \Kdb\Classes\Core_Relation
+     * @throws KdbException First you must define tables name
      */
     protected function setKey($type, $key)
     {
@@ -116,14 +116,14 @@ abstract class Core_Relation {
             return $this;
         }
 
-        throw new LazerException('First you must define tables name');
+        throw new KdbException('First you must define tables name');
     }
 
     /**
      * Set local key name
      * @param string $key key name
-     * @return \Lazer\Classes\Core_Relation
-     * @throws LazerException First you must define tables name
+     * @return \Kdb\Classes\Core_Relation
+     * @throws KdbException First you must define tables name
      */
     public function localKey($key)
     {
@@ -133,8 +133,8 @@ abstract class Core_Relation {
     /**
      * Set foreign key name
      * @param string $key key name
-     * @return \Lazer\Classes\Core_Relation
-     * @throws LazerException First you must define tables name
+     * @return \Kdb\Classes\Core_Relation
+     * @throws KdbException First you must define tables name
      */
     public function foreignKey($key)
     {
@@ -144,7 +144,7 @@ abstract class Core_Relation {
     /**
      * Set relation one2many to table 
      * @param string $table Table name
-     * @return \Lazer\Classes\Core_Relation
+     * @return \Kdb\Classes\Core_Relation
      */
     public function belongsTo($table)
     {
@@ -157,7 +157,7 @@ abstract class Core_Relation {
     /**
      * Set relation many2one to table 
      * @param string $table Table name
-     * @return \Lazer\Classes\Core_Relation
+     * @return \Kdb\Classes\Core_Relation
      */
     public function hasMany($table)
     {
@@ -170,7 +170,7 @@ abstract class Core_Relation {
     /**
      * Set relation many2many to table 
      * @param string $table Table name
-     * @return \Lazer\Classes\Core_Relation
+     * @return \Kdb\Classes\Core_Relation
      */
     public function hasAndBelongsToMany($table)
     {
@@ -183,7 +183,7 @@ abstract class Core_Relation {
     /**
      * Use relation to table
      * @param string $table Table name
-     * @return \Lazer\Classes\Core_Relation
+     * @return \Kdb\Classes\Core_Relation
      */
     public function with($table)
     {
@@ -198,7 +198,7 @@ abstract class Core_Relation {
 
     /**
      * Set specified relation
-     * @throws LazerException Tables names or keys missing
+     * @throws KdbException Tables names or keys missing
      */
     public function setRelation()
     {
@@ -209,7 +209,7 @@ abstract class Core_Relation {
         }
         else
         {
-            throw new LazerException('Tables names or keys missing');
+            throw new KdbException('Tables names or keys missing');
         }
     }
 
@@ -254,7 +254,7 @@ abstract class Core_Relation {
             {
                 Validate::table($junction)->exists();
             }
-            catch (LazerException $e)
+            catch (KdbException $e)
             {
                 Database::create($junction, array(
                     $this->tables['local'] . '_id'   => 'integer',
